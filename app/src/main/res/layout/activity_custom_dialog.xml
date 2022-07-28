@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:id="@+id/tv_test_dialog_type1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="居中弹窗-双按钮样式-双内容居中对齐-带图标"
+        android:layout_marginTop="20dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_test_dialog_type2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="居中弹窗-单个按钮样式-内容左对齐"
+        android:layout_marginTop="20dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_test_dialog_type3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="居中弹窗-单个按钮样式-内容居中对齐"
+        android:layout_marginTop="20dp"
+        />
+    <TextView
+        android:id="@+id/tv_test_dialog_type4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="居中弹窗-单个按钮样式-双内容居中对齐"
+        android:layout_marginTop="20dp"
+        />
+    <TextView
+        android:id="@+id/tv_test_dialog_type5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="居中弹窗-双按钮样式-内容居中对齐"
+        android:layout_marginTop="20dp"
+        />
+    <TextView
+        android:id="@+id/tv_test_dialog_type6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="底部弹窗-双按钮样式-内容居中对齐"
+        android:layout_marginTop="20dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="*******************************************************"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/tv_test_picture_dialog_type1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="居中图片弹窗-有标题-有描述"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        />
+</LinearLayout>
