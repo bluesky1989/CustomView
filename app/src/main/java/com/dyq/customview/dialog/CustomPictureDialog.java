@@ -3,7 +3,6 @@ package com.dyq.customview.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -12,9 +11,12 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.dyq.customview.R;
 
 /**
@@ -40,30 +42,29 @@ public class CustomPictureDialog extends Dialog {
      */
     public static class Builder {
         private Context context;
-        private int topImageId;
+        private Object topImageUrl;//图片url或drawable
         private String title;
         private String content;
-        private String secondTypeContent;
-        private Drawable drawable;
+        private String tips;
         private String positiveButtonText;
-        private String negativeButtonText;
-        private View contentView;
+        private View.OnClickListener closeDialogClickListener;
+        private CompoundButton.OnCheckedChangeListener onCheckedChangeListener;
         private OnClickListener positiveButtonClickListener;
-        private OnClickListener negativeButtonClickListener;
         private boolean isCanceledOnTouchOutside;
         private int gravity;
         private int contentTextAlignment;
-        private int secondTypeContentTextAlignment;
+        private TextView titleView;
+        private TextView tv_content;
 
         public Builder(Context context) {
             this.context = context;
         }
 
         /**
-         * 设置顶部图标
+         * 设置顶部图片
          */
-        public Builder setTopImage(int id) {
-            this.topImageId = id;
+        public Builder setTopImage(Object topImageUrl) {
+            this.topImageUrl = topImageUrl;
             return this;
         }
 
@@ -90,6 +91,16 @@ public class CustomPictureDialog extends Dialog {
         }
 
         /**
+         * 设置提示内容
+         * @param tips
+         * @return
+         */
+        public Builder setTips(String tips){
+            this.tips=tips;
+            return this;
+        }
+
+        /**
          * 设置内容文本对齐方式
          * @param contentTextAlignment
          * @return
@@ -98,19 +109,6 @@ public class CustomPictureDialog extends Dialog {
             this.contentTextAlignment=contentTextAlignment;
             return this;
         }
-
-
-
-        /**
-         * 设置标题图标
-         * @param drawableId
-         * @return
-         */
-        public Builder setDrawable(Drawable drawableId) {
-            this.drawable = drawableId;
-            return this;
-        }
-
 
 
         /**
@@ -123,6 +121,26 @@ public class CustomPictureDialog extends Dialog {
         public Builder setPositiveButton(String positiveButtonText,OnClickListener listener) {
             this.positiveButtonText = positiveButtonText;
             this.positiveButtonClickListener = listener;
+            return this;
+        }
+
+        /**
+         * 设置关闭弹窗事件
+         * @param closeDialogClickListener
+         * @return
+         */
+        public Builder setCloseDialogClickListener(View.OnClickListener closeDialogClickListener) {
+            this.closeDialogClickListener = closeDialogClickListener;
+            return this;
+        }
+
+        /**
+         * 设置 提示单选框选中状态事件
+         * @param onCheckedChangeListener
+         * @return
+         */
+        public Builder setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener onCheckedChangeListener){
+            this.onCheckedChangeListener = onCheckedChangeListener;
             return this;
         }
 
@@ -148,6 +166,21 @@ public class CustomPictureDialog extends Dialog {
         }
 
         /**
+         * 根据标题、内容是否显示更新view
+         */
+        private void updateViewDisplay() {
+            if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(content)){
+                titleView.setMaxLines(1);
+                tv_content.setMaxLines(2);
+            }else if (TextUtils.isEmpty(title) && !TextUtils.isEmpty(content)){
+                tv_content.setTextColor(context.getResources().getColor(R.color.color010101));
+                tv_content.setMaxLines(2);
+            }else if (!TextUtils.isEmpty(title) && TextUtils.isEmpty(content)){
+                titleView.setMaxLines(2);
+            }
+        }
+
+        /**
          * 创建自定义Dialog实例
          *
          * @return
@@ -155,36 +188,29 @@ public class CustomPictureDialog extends Dialog {
         public CustomPictureDialog create() {
             LayoutInflater inflater = LayoutInflater.from(context);
             final CustomPictureDialog dialog = new CustomPictureDialog(context, R.style.DialogStyle);
-
-            View layout;
-            if (contentView != null) {
-                layout = contentView;
-            } else {
-                layout = inflater.inflate(R.layout.layout_picture_dialog, null);
-            }
-
-
-            // 设置顶部图标
-            ImageView top_image = layout.findViewById(R.id.top_image);
-            if (topImageId == 0) {
-                top_image.setVisibility(View.GONE);
-            } else {
-                top_image.setImageResource(topImageId);
-            }
+            View layout = inflater.inflate(R.layout.layout_picture_dialog, null);
+            // 设置顶部图片显示
+            ImageView top_image = layout.findViewById(R.id.iv_top_image);
+            Glide.with(context).load(topImageUrl).into(top_image);
+            //设置关闭弹窗事件
+            ImageView iv_close_dialog=layout.findViewById(R.id.iv_close_dialog);
+            iv_close_dialog.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    closeDialogClickListener.onClick(view);
+                }
+            });
 
             // 设置标题
-            TextView titleView = layout.findViewById(R.id.title);
+            titleView = layout.findViewById(R.id.title);
             if (title == null) {
                 titleView.setVisibility(View.GONE);
             } else {
-                if (drawable != null) {
-                    titleView.setCompoundDrawables(drawable, null, null, null);
-                }
                 titleView.setText(title);
             }
 
             // 设置内容
-            TextView tv_content = layout.findViewById(R.id.tv_content);
+            tv_content = layout.findViewById(R.id.tv_content);
             if (content == null) {
                 tv_content.setVisibility(View.GONE);
             } else {
@@ -203,6 +229,22 @@ public class CustomPictureDialog extends Dialog {
                 tv_content.setTextAlignment(contentTextAlignment);
             }
 
+            TextView tv_tips = layout.findViewById(R.id.tv_tips);
+            //设置提示内容
+            if (tips == null) {
+                tv_tips.setVisibility(View.GONE);
+            } else {
+                tv_tips.setText(tips);
+            }
+
+            //设置提示单选框选中事件
+            CheckBox cb_tips = layout.findViewById(R.id.cb_tips);
+            cb_tips.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    onCheckedChangeListener.onCheckedChanged(compoundButton,b);
+                }
+            });
 
             // 设置"确定"按钮
             TextView tv_sure = layout.findViewById(R.id.tv_sure);
@@ -219,6 +261,8 @@ public class CustomPictureDialog extends Dialog {
                     }
                 });
             }
+
+            updateViewDisplay();
 
             // 设置对话框的视图
             LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);

@@ -6,7 +6,9 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dyq.customview.R;
 
@@ -19,6 +21,9 @@ public class CustomDialogActivity extends AppCompatActivity {
     private TextView tv_test_dialog_type6;
 
     private TextView tv_test_picture_dialog_type1;
+    private TextView tv_test_picture_dialog_type2;
+    private TextView tv_test_picture_dialog_type3;
+
     private CustomDialog customDialog;
     private CustomPictureDialog customPictureDialog;
 
@@ -34,6 +39,8 @@ public class CustomDialogActivity extends AppCompatActivity {
         tv_test_dialog_type6=findViewById(R.id.tv_test_dialog_type6);
 
         tv_test_picture_dialog_type1=findViewById(R.id.tv_test_picture_dialog_type1);
+        tv_test_picture_dialog_type2=findViewById(R.id.tv_test_picture_dialog_type2);
+        tv_test_picture_dialog_type3=findViewById(R.id.tv_test_picture_dialog_type3);
 
         tv_test_dialog_type1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +83,18 @@ public class CustomDialogActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 customPictureDialogType1();
+            }
+        });
+        tv_test_picture_dialog_type2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                customPictureDialogType2();
+            }
+        });
+        tv_test_picture_dialog_type3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                customPictureDialogType3();
             }
         });
     }
@@ -237,14 +256,97 @@ public class CustomDialogActivity extends AppCompatActivity {
         builder.setTitle("这里是标题建议一行以内");
         builder.setContent("有图，有标题，有描述的情况下建议文字最多不超过两行");
         builder.setContentTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        builder.setTips("XX小时内不再提示");
         builder.setCanceledOnTouchOutside(true);
         builder.setGravity(Gravity.CENTER);
         builder.setPositiveButton("了解更多", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
-                if (customDialog != null){
-                    customDialog.dismiss();
+                if (customPictureDialog != null){
+                    customPictureDialog.dismiss();
                 }
+            }
+        });
+        builder.setCloseDialogClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                if (customPictureDialog != null){
+                    customPictureDialog.dismiss();
+                }
+            }
+        });
+        builder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+            }
+        });
+        customPictureDialog=builder.create();
+        customPictureDialog.show();
+    }
+
+    private void customPictureDialogType2() {
+        CustomPictureDialog.Builder builder=new CustomPictureDialog.Builder(CustomDialogActivity.this);
+        builder.setTopImage(R.mipmap.top_picture);
+        builder.setContent("有图，无标题，有描述的情况下建议文字最多不超过2行");
+        builder.setContentTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        builder.setTips("XX小时内不再提示");
+        builder.setCanceledOnTouchOutside(true);
+        builder.setGravity(Gravity.CENTER);
+        builder.setPositiveButton("了解更多", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                if (customPictureDialog != null){
+                    customPictureDialog.dismiss();
+                }
+            }
+        });
+        builder.setCloseDialogClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                if (customPictureDialog != null){
+                    customPictureDialog.dismiss();
+                }
+            }
+        });
+        builder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+            }
+        });
+        customPictureDialog=builder.create();
+        customPictureDialog.show();
+    }
+
+    private void customPictureDialogType3() {
+        CustomPictureDialog.Builder builder=new CustomPictureDialog.Builder(CustomDialogActivity.this);
+        builder.setTopImage(R.mipmap.top_picture);
+        builder.setTitle("这里是标题，\n" +
+                "建议2行以内，不要太多");
+        builder.setTips("XX小时内不再提示");
+        builder.setCanceledOnTouchOutside(true);
+        builder.setGravity(Gravity.CENTER);
+        builder.setPositiveButton("了解更多", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                if (customPictureDialog != null){
+                    customPictureDialog.dismiss();
+                }
+            }
+        });
+        builder.setCloseDialogClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                if (customPictureDialog != null){
+                    customPictureDialog.dismiss();
+                }
+            }
+        });
+        builder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
             }
         });
         customPictureDialog=builder.create();
