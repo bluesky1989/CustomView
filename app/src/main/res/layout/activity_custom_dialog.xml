@@ -60,6 +60,15 @@
         />
 
     <TextView
+        android:id="@+id/tv_test_dialog_type7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="居中弹窗-双按钮样式-双内容居中对齐"
+        android:layout_marginTop="20dp"
+        />
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="************************************************************"

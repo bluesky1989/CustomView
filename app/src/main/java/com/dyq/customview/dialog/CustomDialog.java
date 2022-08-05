@@ -44,6 +44,7 @@ public class CustomDialog extends Dialog {
         private String title;
         private String content;
         private String secondTypeContent;
+        private CharSequence thirdTypeContent;
         private Drawable drawable;
         private String positiveButtonText;
         private String negativeButtonText;
@@ -54,6 +55,7 @@ public class CustomDialog extends Dialog {
         private int gravity;
         private int contentTextAlignment;
         private int secondTypeContentTextAlignment;
+        private int thirdTypeContentTextAlignment;
 
         public Builder(Context context) {
             this.context = context;
@@ -117,6 +119,27 @@ public class CustomDialog extends Dialog {
          */
         public Builder setSecondTypeContentTextAlignment(int secondTypeContentTextAlignment) {
             this.secondTypeContentTextAlignment=secondTypeContentTextAlignment;
+            return this;
+        }
+
+        /**
+         * 设置内容3
+         *显示位置和content一致
+         * @param thirdTypeContent
+         * @return
+         */
+        public Builder setThirdTypeContent(CharSequence thirdTypeContent) {
+            this.thirdTypeContent = thirdTypeContent;
+            return this;
+        }
+
+        /**
+         * 设置内容3文本对齐方式
+         * @param thirdTypeContentTextAlignment
+         * @return
+         */
+        public Builder setThirdTypeContentTextAlignment(int thirdTypeContentTextAlignment) {
+            this.thirdTypeContentTextAlignment = thirdTypeContentTextAlignment;
             return this;
         }
 
@@ -231,19 +254,22 @@ public class CustomDialog extends Dialog {
 
             // 设置内容
             TextView tv_content = layout.findViewById(R.id.tv_content);
-            if (content == null) {
+            if (content == null && thirdTypeContent == null) {
                 tv_content.setVisibility(View.GONE);
             } else {
-                if (contentTextAlignment == View.TEXT_ALIGNMENT_TEXT_START){//左对齐
+                if (contentTextAlignment == View.TEXT_ALIGNMENT_TEXT_START || thirdTypeContentTextAlignment == View.TEXT_ALIGNMENT_TEXT_START){//左对齐
                     tv_content.setText(Html.fromHtml(content));
                 }else {
-                    tv_content.setText(content);
+                    if (content != null){
+                        tv_content.setText(content);
+                    }else {
+                        tv_content.setText(thirdTypeContent);
+                    }
                 }
-
             }
 
             //设置内容文本对齐方式
-            if (contentTextAlignment == 0) {
+            if (contentTextAlignment == 0 ||thirdTypeContentTextAlignment == 0) {
                 tv_content.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             } else {
                 tv_content.setTextAlignment(contentTextAlignment);

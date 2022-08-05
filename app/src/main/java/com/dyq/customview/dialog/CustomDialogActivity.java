@@ -19,6 +19,7 @@ public class CustomDialogActivity extends AppCompatActivity {
     private TextView tv_test_dialog_type4;
     private TextView tv_test_dialog_type5;
     private TextView tv_test_dialog_type6;
+    private TextView tv_test_dialog_type7;
 
     private TextView tv_test_picture_dialog_type1;
     private TextView tv_test_picture_dialog_type2;
@@ -37,6 +38,7 @@ public class CustomDialogActivity extends AppCompatActivity {
         tv_test_dialog_type4=findViewById(R.id.tv_test_dialog_type4);
         tv_test_dialog_type5=findViewById(R.id.tv_test_dialog_type5);
         tv_test_dialog_type6=findViewById(R.id.tv_test_dialog_type6);
+        tv_test_dialog_type7=findViewById(R.id.tv_test_dialog_type7);
 
         tv_test_picture_dialog_type1=findViewById(R.id.tv_test_picture_dialog_type1);
         tv_test_picture_dialog_type2=findViewById(R.id.tv_test_picture_dialog_type2);
@@ -77,6 +79,12 @@ public class CustomDialogActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 customDialogType6();
+            }
+        });
+        tv_test_dialog_type7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                customDialogType7();
             }
         });
         tv_test_picture_dialog_type1.setOnClickListener(new View.OnClickListener() {
@@ -230,6 +238,34 @@ public class CustomDialogActivity extends AppCompatActivity {
         builder.setContentTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         builder.setCanceledOnTouchOutside(true);
         builder.setGravity(Gravity.BOTTOM);
+        builder.setNegativeButton("按钮", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                if (customDialog != null){
+                    customDialog.dismiss();
+                }
+            }
+        });
+        builder.setPositiveButton("按钮", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                if (customDialog != null){
+                    customDialog.dismiss();
+                }
+            }
+        });
+        customDialog=builder.create();
+        customDialog.show();
+    }
+
+    private void customDialogType7() {
+        CustomDialog.Builder builder=new CustomDialog.Builder(CustomDialogActivity.this);
+        builder.setTitle("弹窗标题");
+        builder.setThirdTypeContent("弹窗内容弹窗内容弹窗内容");
+        builder.setThirdTypeContentTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        builder.setSecondTypeContent("请前往【我的】-我的积分查看");
+        builder.setCanceledOnTouchOutside(true);
+        builder.setGravity(Gravity.CENTER);
         builder.setNegativeButton("按钮", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
