@@ -245,6 +245,7 @@ public class CustomDialog extends Dialog {
             TextView titleView = layout.findViewById(R.id.title);
             if (title == null) {
                 titleView.setVisibility(View.GONE);
+                line_space.setVisibility(View.GONE);
             } else {
                 if (drawable != null) {
                     titleView.setCompoundDrawables(drawable, null, null, null);

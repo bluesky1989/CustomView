@@ -20,6 +20,7 @@ public class CustomDialogActivity extends AppCompatActivity {
     private TextView tv_test_dialog_type5;
     private TextView tv_test_dialog_type6;
     private TextView tv_test_dialog_type7;
+    private TextView tv_test_dialog_type8;
 
     private TextView tv_test_picture_dialog_type1;
     private TextView tv_test_picture_dialog_type2;
@@ -39,6 +40,7 @@ public class CustomDialogActivity extends AppCompatActivity {
         tv_test_dialog_type5=findViewById(R.id.tv_test_dialog_type5);
         tv_test_dialog_type6=findViewById(R.id.tv_test_dialog_type6);
         tv_test_dialog_type7=findViewById(R.id.tv_test_dialog_type7);
+        tv_test_dialog_type8=findViewById(R.id.tv_test_dialog_type8);
 
         tv_test_picture_dialog_type1=findViewById(R.id.tv_test_picture_dialog_type1);
         tv_test_picture_dialog_type2=findViewById(R.id.tv_test_picture_dialog_type2);
@@ -85,6 +87,12 @@ public class CustomDialogActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 customDialogType7();
+            }
+        });
+        tv_test_dialog_type8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                customDialogType8();
             }
         });
         tv_test_picture_dialog_type1.setOnClickListener(new View.OnClickListener() {
@@ -275,6 +283,32 @@ public class CustomDialogActivity extends AppCompatActivity {
             }
         });
         builder.setPositiveButton("按钮", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                if (customDialog != null){
+                    customDialog.dismiss();
+                }
+            }
+        });
+        customDialog=builder.create();
+        customDialog.show();
+    }
+
+    private void customDialogType8() {
+        CustomDialog.Builder builder=new CustomDialog.Builder(CustomDialogActivity.this);
+        builder.setContent("账号已失效，请重新登入！");
+        builder.setContentTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        builder.setCanceledOnTouchOutside(true);
+        builder.setGravity(Gravity.CENTER);
+        builder.setNegativeButton("我知道了", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                if (customDialog != null){
+                    customDialog.dismiss();
+                }
+            }
+        });
+        builder.setPositiveButton("登录", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
                 if (customDialog != null){
